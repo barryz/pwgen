@@ -9,4 +9,5 @@ $go install
 ```go
 $pwgen
 $pwgen -s 32
+$pwgen -s 32 -c 10
 ```

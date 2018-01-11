@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -16,7 +17,10 @@ var (
 	chars = []rune("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm0987654321!@#$%^&*()_+=-")
 
 	// Flags
-	size = flag.Int("s", DefaultPassLength, "password length, default is 16")
+	size  = flag.Int("s", DefaultPassLength, "password length, default is 16")
+	count = flag.Int("c", 1, "numbers of password to generation")
+
+	wg sync.WaitGroup
 )
 
 func init() {
@@ -34,13 +38,23 @@ func usage() {
 
 func main() {
 	var randomPassword string
-	if *size > 0 {
-		randomPassword = genPasswordWithLength(*size)
-	} else {
-		randomPassword = genPasswordWithLength(DefaultPassLength)
+
+	for i := 1; i <= *count; i++ {
+		wg.Add(1)
+		randomPassword = ""
+
+		go func(i int) {
+			defer wg.Done()
+			if *size > 0 {
+				randomPassword = genPasswordWithLength(*size)
+			} else {
+				randomPassword = genPasswordWithLength(DefaultPassLength)
+			}
+			fmt.Printf("%s\n", randomPassword)
+		}(i)
 	}
 
-	fmt.Printf("%s\n", randomPassword)
+	wg.Wait()
 }
 
 func genPasswordWithLength(length int) string {
