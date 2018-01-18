@@ -14,7 +14,7 @@ const (
 )
 
 var (
-	chars = []rune("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm0987654321!@#$%^&*()_+=-")
+	chars = []rune("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm0987654321")
 
 	// Flags
 	size  = flag.Int("s", DefaultPassLength, "password length, default is 16")
