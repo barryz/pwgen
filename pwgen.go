@@ -17,8 +17,9 @@ var (
 	chars = []rune("QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm0987654321")
 
 	// Flags
-	size  = flag.Int("s", DefaultPassLength, "password length, default is 16")
-	count = flag.Int("c", 1, "numbers of password to generation")
+	size    = flag.Int("s", DefaultPassLength, "password length, default is 16")
+	count   = flag.Int("c", 1, "numbers of password to generation")
+	version = flag.Bool("v", false, "show version")
 
 	wg sync.WaitGroup
 )
@@ -39,6 +40,11 @@ func usage() {
 }
 
 func main() {
+	if *version {
+		fmt.Println("v0.0.1")
+		os.Exit(1)
+	}
+
 	var randomPassword string
 
 	for i := 1; i <= *count; i++ {
