@@ -26,6 +26,8 @@ var (
 func init() {
 	flag.Usage = usage
 	flag.Parse()
+
+	rand.Seed(time.Now().UTC().UnixNano())
 }
 
 func usage() {
@@ -58,7 +60,6 @@ func main() {
 }
 
 func genPasswordWithLength(length int) string {
-	rand.Seed(time.Now().UTC().UnixNano())
 	charsArray := make([]rune, length)
 	for i := range charsArray {
 		charsArray[i] = chars[next(0, len(chars))]
